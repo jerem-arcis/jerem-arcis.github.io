@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script src="https://kit.fontawesome.com/918627bee1.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <title>recherche par aliment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <nav class="navbar navbar-expand-lg " style="background-color: #f2fff6;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html">Marmit-thon</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="recherche_plat_restau.html">Recherche plat (restaurant)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="recherche_plat.html">Recherche de plats (recettes)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="recherche_par_aliment.html"id="selected">Recherche par aliments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="tableau2.html">Recherche recette avec filtre calorique</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="tableau.html">Recette aléatoire</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="explication_api.html">Explication code (api)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="explication_code.html">Explication code (ressource externe)</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+      <div class="brecherche">          
+        <input type="text" id="plat"
+        placeholder="recherche (ex : apple)" value="" autofocus>
+        <button type="button" class="btn btn-outline-success" id="myBtn">Recherche</button>
+      </div>
+      <section>
+        <div id="resultAPI">
+            En attente de votre recherche
+        </div>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      </section>
+      <script>
+        var resultAPI = document.getElementById("resultAPI");
+        // Sur clic sur le bouton
+        document.getElementById("myBtn").addEventListener("click", function(e) {
+        // Message d'attente
+        resultAPI.innerHTML = "Recherche en cours...";
+        
+        // Récupération SIRET et suppression des espaces
+        let rplat = document.getElementById("plat").value;
+        // Définition du endPoint
+        let endPoint = 'https://api.spoonacular.com/food/search?apiKey=f70a9841f245471db500d6789916d2b4&query='+encodeURI(rplat)+'&number=4';
+        var contenuPage = document.getElementById('resultAPI') ;
+        
+        ajaxGet(endPoint, function (reponse) {
+                        let contenu ;
+                        contenu ='<section id="espace"><h4 id="placement">Les recettes</h4><div class="row row-cols-1 row-cols-md-4" >';
+                        for ( let i = 0 ; i < 4; i++ ) {
+                            contenu +='<div class="col" >';
+                            contenu +='<div class="card border-success"  style="height: 18rem;" >';
+                            contenu +='<div class="text-center">';
+                            contenu +='<img src='+reponse.searchResults[0].results[i].image+' class="dim-img">';
+                            contenu +='<div class="card-body">';
+                            contenu +='<h5 class="card-title">'+reponse.searchResults[0].results[i].name+'</h5>';
+                            contenu +='<a class="btn btn-outline-success" href="'+reponse.searchResults[0].results[i].link+'" role="button" target="_blank">regarder la recette</a>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                        }
+                        contenu +='</div>';                        
+                        contenu +='<h4 id="placement">Les vidéos</h4>'; 
+                        contenu +='<div class="row row-cols-1 row-cols-md-4" >';
+                        for ( let i = 0 ; i < 4; i++ ) {
+                            contenu +='<div class="col" >';
+                            contenu +='<div class="card border-success"  style="height: 20rem;" >';
+                            contenu +='<div class="text-center">';
+                            contenu +='<img src='+reponse.searchResults[4].results[i].image+' class="dim-img">';
+                            contenu +='<div class="card-body">';
+                            contenu +='<h5 class="card-title">'+reponse.searchResults[4].results[i].name+'</h5>';
+                            if(reponse.searchResults[4].results[i].link == null){
+                            contenu +='<button type="button" class="btn btn-danger" disabled>Pas de vidéo disponible</button>';
+                            }
+                            else {                                
+                            contenu +='<a class="btn btn-outline-success" href="'+reponse.searchResults[4].results[i].link+'" role="button" target="_blank">regarder la vidéo</a>';
+                            }
+                            contenu +='</div>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                        }
+                            contenu +='</div>';
+                        contenu +='<h4 id="placement">Les produits</h4>'; 
+                        contenu +='<div class="row row-cols-1 row-cols-md-4" >';
+                        for ( let i = 0 ; i < 4; i++ ) {
+                            contenu +='<div class="col" >';
+                            contenu +='<div class="card border-success"  style="height: 20rem;" >';
+                            contenu +='<div class="text-center">';
+                            contenu +='<img src='+reponse.searchResults[1].results[i].image+' class="dim-img">';
+                            contenu +='<div class="card-body">';
+                            contenu +='<h5 class="card-title">'+reponse.searchResults[1].results[i].name+'</h5>';
+                            contenu +='<a class="btn btn-outline-success" href="'+reponse.searchResults[1].results[i].link+'" role="button" target="_blank">regarder le produit</a>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                            contenu +='</div>';
+                        }
+                        contenu +='</div>';
+
+                            contenu +='</div></section>';
+                            contenu +='<footer>';
+                            contenu +='<a href="https://twitter.com"><i class="fab fa-twitter"></i></a>';
+                            contenu +='<a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>';
+                            contenu +='<a href="https://fr-fr.facebook.com"><i class="fab fa-facebook-f"></i></a>';
+                            contenu +='</footer>';
+                        contenuPage.innerHTML = contenu ;
+                    }) ;
+                });
+
+
+
+                    function ajaxGet(url, callback) {
+                        let promise = fetch(url, {method : "GET",})
+                        .then((resp) => resp.json())
+                        .then(function(data) {callback(data) ;})
+                        .catch(function(error) {
+                        console.error(error + " " + url) ;
+                        }) ;
+                    }
+                
+        </script>
+</body>
+</html>

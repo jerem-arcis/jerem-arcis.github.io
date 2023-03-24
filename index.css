@@ -1,0 +1,156 @@
+:root {
+    --wimage: 15rem;
+    --himage: 10rem;
+  }
+
+section{
+    padding: 1rem;
+    padding-top: 1rem;
+}
+#espace .col{
+    padding: 1rem;
+}
+nav{
+    border-bottom: 1px solid rgb(0, 255, 13);
+}
+.element_center{
+    text-align: center;
+    justify-content: center;
+}
+
+footer{
+    height: 4rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+footer a:hover 
+{
+	font-size:22px;
+	animation:ok 1.5s;
+}
+
+@keyframes ok {
+	
+	0% {
+		transform:translateX(100);
+		opacity:0;
+	}
+	100% {
+		opacity:2;
+	}
+}
+footer i{
+    font-size: 3rem;
+    padding:0.5rem;
+    color: rgb(1, 134, 1);
+}
+.centrer{
+    text-align: center;
+}
+
+#placement{
+    text-align: center;
+}
+.dim-img{
+    padding-top: 0.5rem;
+    width: var(--wimage);
+    height: var(--himage);
+    border-radius: 3rem;
+}
+@media (min-width: 768px) and (max-width:  1024px){
+    :root {
+        --wimage: 9rem;
+        --himage: 5rem;
+    }
+
+}
+@media (min-width: 1024px) and (max-width:  1280px){
+    :root {
+        --wimage: 13rem;
+        --himage: 8rem;
+    }
+
+}
+
+.brecherche{
+    padding-top: 1rem;
+    height: 5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    vertical-align:middle;
+}
+#plat{
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #14A44D;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 3rem;
+}
+#myBtn{
+    height: 3rem;
+}
+
+#gallery{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.image_gallery{
+    border-radius: 1rem;
+    border: 1px solid #14A44D;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+.image_gallery2{
+    border-radius: 1rem;
+    width: 10rem;
+    height: 5rem;
+}
+#selected{
+    color: #0c7938;
+    font-weight: bold;
+}
+h6{
+    color: red;
+}
+#modaltest{
+    width: 50%;
+    height:10rem;
+    background-color: #0c7938;
+    display: flex;
+    justify-content: center;
+}
+td a{
+    color: black;
+}
+.slidecontainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .slider {
+    width: 40%;
+    height: 2REM;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1 ;
+  }
+  
+  p{
+    margin-left: 2rem;
+  }
